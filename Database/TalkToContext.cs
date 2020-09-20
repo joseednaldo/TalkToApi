@@ -17,5 +17,6 @@ namespace TalkToApi.Database
         }
 
         public DbSet<Mensagem> Mensagem { get; set; }
+        public DbSet<Token> Tokens { get; set; }
     }
 }
