@@ -20,5 +20,6 @@ namespace TalkToApi.V1.Models
         public DateTime ExpirationRefreshToken { get; set; }
         public DateTime Criado { get; set; }
         public DateTime? Atualizado { get; set; }
+        public DateTime? teste { get; set; }
     }
 }

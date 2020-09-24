@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200923004832_tabela_2.cs" />
+    <Compile Remove="Migrations\20200923004832_tabela_2.Designer.cs" />
+    <Compile Remove="Migrations\20200923004925_bancoInicial002.cs" />
+    <Compile Remove="Migrations\20200923004925_bancoInicial002.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.6" />

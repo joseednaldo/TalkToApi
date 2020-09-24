@@ -11,6 +11,8 @@ using TalkToApi.V1.Models;
 using System.Text;
 using System.Security.Claims;
 using TalkToApi.V1.Repositories.Contracts;
+using TalkToApi.V1.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TalkToApi.V1.Controllers
 {
@@ -30,6 +32,28 @@ namespace TalkToApi.V1.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenRepositorie = tokenRepositorie;
+        }
+        
+        
+
+
+       [Authorize]
+       [HttpGet("")]
+        public ActionResult ObterTodos()
+        {
+            return Ok(_userManager.Users);
+        }
+
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public ActionResult ObterUsuario(string id)
+        {
+            var usuario = _userManager.FindByIdAsync(id).Result;
+            if (usuario == null)
+                return NotFound();
+
+            return Ok(usuario);
         }
 
         [HttpPost("login")]
@@ -153,6 +177,58 @@ namespace TalkToApi.V1.Controllers
 
                     return UnprocessableEntity(erros);
 
+                }
+                else
+                {
+                    return Ok(usuario);
+                }
+
+            }
+            else
+            {
+                return UnprocessableEntity(ModelState);
+            }
+        }
+
+
+        /*
+         * api/usuario/{id} -> PRO SE TRATAR DE ATUALIZAÇÃO USAMOS O "PUT".   
+         */
+        [Authorize]
+        [HttpPut("{id}")]
+        public ActionResult Atualizar(string id,[FromBody]UsuarioDTO usuarioDTO)
+        {
+            // Todo -a dcionar filtro de validação.
+            //if (_userManager.GetUserAsync(HttpContext.User).Result.Id != id)
+            ApplicationUser usuario = _userManager.GetUserAsync(HttpContext.User).Result;
+            if(usuario.Id != id)
+            {
+                return Forbid();
+            }
+            if (ModelState.IsValid)
+            {
+                // TODO - REFATORAR PARA AUTOMAPER
+               // ApplicationUser usuario = new ApplicationUser();
+                usuario.FullName = usuarioDTO.Nome;
+                usuario.UserName = usuarioDTO.Email;
+                usuario.Email = usuarioDTO.Email;
+                usuario.Slogan = usuario.Slogan;
+
+
+                // TOTOD - REMOVER NO IDENTITY OS CRITÉRIOS DA SENHA
+                var resultado = _userManager.UpdateAsync(usuario).Result;
+                _userManager.RemovePasswordAsync(usuario);
+                _userManager.AddPasswordAsync(usuario,usuarioDTO.Senha);
+
+                if (!resultado.Succeeded)
+                {
+                    List<string> erros = new List<string>();
+                    foreach (var erro in resultado.Errors)
+                    {
+                        erros.Add(erro.Description);
+                    }
+
+                    return UnprocessableEntity(erros);
                 }
                 else
                 {

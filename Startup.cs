@@ -62,6 +62,7 @@ namespace TalkToApi
             #region Reposotorios
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IMensagemRepository, MensagemRepository>();
             #endregion
 
 
@@ -85,8 +86,9 @@ namespace TalkToApi
                 cfg.ReportApiVersions = true;
 
                 //cfg.ApiVersionReader = new HeaderApiVersionReader("api-version");
-                cfg.AssumeDefaultVersionWhenUnspecified = true;
-                cfg.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                cfg.AssumeDefaultVersionWhenUnspecified = true;  // parâmetro complementar ao ".DefaultApiVersion"
+                cfg.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0); // versão default - padrão ou sugerida.
+
             });
 
             services.AddSwaggerGen(cfg => {
@@ -103,20 +105,18 @@ namespace TalkToApi
                 };
                 cfg.AddSecurityRequirement(security);
 
-                cfg.ResolveConflictingActions(apiDescription => apiDescription.First());
+                cfg.ResolveConflictingActions(apiDescription => apiDescription.First());// para resolver conflitos de versões da API no Swagger, com mesmo nome.
                 cfg.SwaggerDoc("v1.0", new Swashbuckle.AspNetCore.Swagger.Info()
                 {
                     Title = "MinhasTarefas API - V1.0",
                     Version = "v1.0"
                 });
 
-                var CaminhoProjeto = PlatformServices.Default.Application.ApplicationBasePath; ;
-                var NomeProjeto = $"{PlatformServices.Default.Application.ApplicationName}.xml";
+                var CaminhoProjeto = PlatformServices.Default.Application.ApplicationBasePath;//recupera o caminho do projeto...
+                var NomeProjeto = $"{PlatformServices.Default.Application.ApplicationName}.xml"; //recupera o nome do projeto...
                 var CaminhoArquivoXMLComentario = Path.Combine(CaminhoProjeto, NomeProjeto);
 
                 cfg.IncludeXmlComments(CaminhoArquivoXMLComentario);
-
-
 
                 cfg.DocInclusionPredicate((docName, apiDesc) =>
                 {
