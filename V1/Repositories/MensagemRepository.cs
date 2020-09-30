@@ -20,7 +20,7 @@ namespace TalkToApi.V1.Repositories
 
         public List<Mensagem> ObterMensagem(string usuarioUmId, string usuarioDoisId)
         {
-           return _banco.Mensagem.Where(a => (a.DeId == usuarioUmId || a.DeId == usuarioDoisId) && a.ParaId == usuarioDoisId || a.ParaId == usuarioUmId).ToList();
+           return _banco.Mensagem.Where(a => (a.DeId == usuarioUmId || a.DeId == usuarioDoisId) && a.ParaId == usuarioUmId  || a.ParaId == usuarioDoisId).ToList();
         }
 
         public void Cadastrar(Mensagem mensagem)
@@ -29,5 +29,15 @@ namespace TalkToApi.V1.Repositories
             _banco.SaveChanges();
         }
 
+        public void Atualizar(Mensagem mensagem)
+        {
+            _banco.Mensagem.Update (mensagem);
+            _banco.SaveChanges();
+        }
+
+        public Mensagem Obter(int id)
+        {
+            return _banco.Mensagem.Find(id);
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Security.Claims;
 using TalkToApi.V1.Repositories.Contracts;
 using TalkToApi.V1.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace TalkToApi.V1.Controllers
 {
@@ -21,32 +22,41 @@ namespace TalkToApi.V1.Controllers
     [ApiVersion("1.0")]
     public class UsuarioController : ControllerBase
     {
+        private readonly IMapper _maper;
         private readonly ITokenRepository _tokenRepositorie;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UsuarioController(IUsuarioRepository usuarioRepository, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ITokenRepository tokenRepositorie)
+        public UsuarioController(IUsuarioRepository usuarioRepository, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ITokenRepository tokenRepositorie, IMapper maper)
         {
+
             _usuarioRepository = usuarioRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _tokenRepositorie = tokenRepositorie;
+            _maper = maper;
         }
         
-        
-
-
        [Authorize]
        [HttpGet("")]
         public ActionResult ObterTodos()
         {
-            return Ok(_userManager.Users);
+
+            var usuarioAppUser = _userManager.Users.ToList();
+            var listaUsuarioDTO =  _maper.Map<List<ApplicationUser>, List<UsuarioDTO>>(usuarioAppUser);
+
+            foreach (var UsuarioDTO in listaUsuarioDTO)
+            {
+                UsuarioDTO.Links.Add(new LinkDTO("_self", Url.Link("ObterUsuario",new { id = UsuarioDTO.Id}), "GET"));
+            }
+
+            return Ok(listaUsuarioDTO);
         }
 
 
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "ObterUsuario")]
         public ActionResult ObterUsuario(string id)
         {
             var usuario = _userManager.FindByIdAsync(id).Result;
