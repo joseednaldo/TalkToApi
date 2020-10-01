@@ -39,7 +39,7 @@ namespace TalkToApi.V1.Controllers
         }
         
        [Authorize]
-       [HttpGet("")]
+       [HttpGet("",Name = "UsuarioObterTodos")]
         public ActionResult ObterTodos()
         {
 
@@ -48,22 +48,30 @@ namespace TalkToApi.V1.Controllers
 
             foreach (var UsuarioDTO in listaUsuarioDTO)
             {
-                UsuarioDTO.Links.Add(new LinkDTO("_self", Url.Link("ObterUsuario",new { id = UsuarioDTO.Id}), "GET"));
+                UsuarioDTO.Links.Add(new LinkDTO("_self", Url.Link("UsuarioObter", new { id = UsuarioDTO.Id}), "GET"));
             }
 
-            return Ok(listaUsuarioDTO);
+            var lista =  new ListaDTO<UsuarioDTO>() { Lista = listaUsuarioDTO };
+            lista.Links.Add(new LinkDTO("_self", Url.Link("UsuarioObterTodos", null), "GET"));
+            return Ok(lista);
         }
 
 
         [Authorize]
-        [HttpGet("{id}", Name = "ObterUsuario")]
+        [HttpGet("{id}", Name = "UsuarioObter")]
         public ActionResult ObterUsuario(string id)
         {
             var usuario = _userManager.FindByIdAsync(id).Result;
+
             if (usuario == null)
                 return NotFound();
 
-            return Ok(usuario);
+            //USANSO HETEOS-links
+            var usuarioDTOdb = _maper.Map<ApplicationUser, UsuarioDTO>(usuario);
+            usuarioDTOdb.Links.Add(new LinkDTO("_self", Url.Link("UsuarioObter", new { id = usuario.Id }), "GET"));
+            usuarioDTOdb.Links.Add(new LinkDTO("_atualizar", Url.Link("UsuarioAtualizar", new { id = usuario.Id }), "PUT"));
+
+            return Ok(usuarioDTOdb);
         }
 
         [HttpPost("login")]
@@ -143,7 +151,6 @@ namespace TalkToApi.V1.Controllers
             #endregion
         }
 
-
         [HttpPost("renovar")]
         public ActionResult Renovar([FromBody]TokenDTO _tokenDTO)
         {
@@ -164,7 +171,7 @@ namespace TalkToApi.V1.Controllers
 
         }
 
-        [HttpPost()]//rota padrao
+        [HttpPost("",Name= "UsuarioCadastrar")]//rota padrao
         public ActionResult Cadastrar([FromBody]UsuarioDTO usuarioDTO)
         {
             if (ModelState.IsValid)
@@ -190,9 +197,14 @@ namespace TalkToApi.V1.Controllers
                 }
                 else
                 {
-                    return Ok(usuario);
-                }
+                    var usuarioDTOdb = _maper.Map<ApplicationUser, UsuarioDTO>(usuario);
+                    usuarioDTOdb.Links.Add(new LinkDTO("_self", Url.Link("UsuarioCadastrar", new { id = usuario.Id }), "POST"));
+                    usuarioDTOdb.Links.Add(new LinkDTO("_obter", Url.Link("UsuarioObter", new { id = usuario.Id }), "GET"));
+                    usuarioDTOdb.Links.Add(new LinkDTO("_atualizar", Url.Link("UsuarioAtualizar", new { id = usuario.Id }), "PUT"));
 
+                    return Ok(usuarioDTOdb);
+                }
+                
             }
             else
             {
@@ -200,12 +212,11 @@ namespace TalkToApi.V1.Controllers
             }
         }
 
-
         /*
          * api/usuario/{id} -> PRO SE TRATAR DE ATUALIZAÇÃO USAMOS O "PUT".   
          */
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut("{id}",Name ="UsuarioAtualizar")]
         public ActionResult Atualizar(string id,[FromBody]UsuarioDTO usuarioDTO)
         {
             // Todo -a dcionar filtro de validação.
@@ -242,7 +253,11 @@ namespace TalkToApi.V1.Controllers
                 }
                 else
                 {
-                    return Ok(usuario);
+                    var usuarioDTOdb = _maper.Map<ApplicationUser, UsuarioDTO>(usuario);
+                    usuarioDTOdb.Links.Add(new LinkDTO("_self", Url.Link("UsuarioAtualizar", new { id = usuario.Id }), "PUT"));
+                    usuarioDTOdb.Links.Add(new LinkDTO("_obter", Url.Link("UsuarioObter", new { id = usuario.Id }), "GET"));
+
+                    return Ok(usuarioDTOdb);
                 }
 
             }
@@ -251,7 +266,6 @@ namespace TalkToApi.V1.Controllers
                 return UnprocessableEntity(ModelState);
             }
         }
-
 
         #region  Métodos privados
         private ActionResult CriarNovoToken(ApplicationUser usuario)
