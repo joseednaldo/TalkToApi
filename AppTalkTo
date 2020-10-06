@@ -1,0 +1,450 @@
+#################
+AULA  72 
+##################
+TalkTo
+Resumo : vai rodar na web e app CELULAR.
+
+Modelo de Projeto: ASP.NET Core Web Aplication
+Nome do projeto: TalkToApi   
+CORE 2.2   (DEPOIS MUDAR PARA 3.1)
+Escolher a opção : API  obs: ja um exmplo ja criado
+
+
+######################################################
+AULA  73 -     CONFIGRUANDO BANCO DE DADOS E MODELO.
+#########################################################
+
+Biblioteca pra usar o IdentityUser => using Microsoft.AspNetCore.Identity;
+
+
+Biblioteca  para usar o IdentityDbContext como contexto=>using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+Ferramenta:   Nesse caso como estou usando o core 2.2, a versão dos recursos aversao
+-Microsoft.EntityFrameworkCore.Sqlite versao 2.2.6     = usar o banco de dados
+-Microsoft.EntityFrameworkCore.Tools  versao 2.2.6    = pra usar o Migration  
+
+comando migration
+-- Add-Migration bancoInicial
+--Update-Database        (cria o banco)
+
+
+######################################################
+AULA  74 -  USUARIOCONTROLLER E CADASTRO DE LOGIN
+#######################################################
+- CRIAR UM CONTROLADOR DE USUARIO
+Ex: Controlador Api - vazio  / API controller  - empty
+
+package: 
+Microsoft.AspNetCore.Mvc.Version    =  3.1.6   usamos para versionamento de api.
+
+
+
+######################################################
+AULA  75 -  ADIONANDO VERSIOANMENTO E SUWAGGER
+#######################################################
+
+Package: Suwgger
+Swashbuckle.AspNetCore  versão 4.0.1
+Microsoft.Extensions.PlatformAbstractions   versão 1.1.0
+
+
+######################################################
+AULA  76 -  AUTO MAPPER - DTO
+#######################################################
+package  = AutoMaper version:9.0.0
+
+AutoMapper configuração
+cinfigura no automapper no setup.cs.
+
+
+######################################################
+AULA  76/77 - ATUALZIAR USUARIO
+#######################################################
+-USUARIO ATUALIZAR7
+
+
+
+######################################################
+AULA  78 -  TESTANDPO E ATUALIZANDO USUARIO.
+#######################################################
+ok
+
+
+######################################################
+AULA  79  OBTER E OBTER TODOS.
+######################################################
+um objeto apenas
+{
+    "fullName": "ednaldo",
+    "slogan": null,
+    "id": "aef6045a-efeb-4c81-80ae-175ce5dd31c1",
+    "userName": "joseednaldo1983@gmail.com",
+    "normalizedUserName": "JOSEEDNALDO1983@GMAIL.COM",
+    "email": "joseednaldo1983@gmail.com",
+    "normalizedEmail": "JOSEEDNALDO1983@GMAIL.COM",
+    "emailConfirmed": false,
+    "passwordHash": "AQAAAAEAACcQAAAAEPnNteIy9Y0RL/HlzJcCzYXHFt2FymFYQWzn0cMfbucEGCH9PamHAgiFnKpS/PahLg==",
+    "securityStamp": "QARGGAHK6QPZNUM7ISKEKF7AD3D2IBKG",
+    "concurrencyStamp": "289afcd5-d55f-42c4-88b6-09ff2ff67c52",
+    "phoneNumber": null,
+    "phoneNumberConfirmed": false,
+    "twoFactorEnabled": false,
+    "lockoutEnd": null,
+    "lockoutEnabled": true,
+    "accessFailedCount": 0
+}
+
+
+Uma lista com varios objetos: []
+[
+	{
+		"fullName": "ednaldo",
+		"slogan": null,
+		"id": "aef6045a-efeb-4c81-80ae-175ce5dd31c1",
+		"userName": "joseednaldo1983@gmail.com",
+		"normalizedUserName": "JOSEEDNALDO1983@GMAIL.COM",
+		"email": "joseednaldo1983@gmail.com",
+		"normalizedEmail": "JOSEEDNALDO1983@GMAIL.COM",
+		"emailConfirmed": false,
+		"passwordHash": "AQAAAAEAACcQAAAAEPnNteIy9Y0RL/HlzJcCzYXHFt2FymFYQWzn0cMfbucEGCH9PamHAgiFnKpS/PahLg==",
+		"securityStamp": "QARGGAHK6QPZNUM7ISKEKF7AD3D2IBKG",
+		"concurrencyStamp": "289afcd5-d55f-42c4-88b6-09ff2ff67c52",
+		"phoneNumber": null,
+		"phoneNumberConfirmed": false,
+		"twoFactorEnabled": false,
+		"lockoutEnd": null,
+		"lockoutEnabled": true,
+		"accessFailedCount": 0
+	},
+	{
+    "fullName": "ednaldo",
+    "slogan": null,
+    "id": "aef6045a-efeb-4c81-80ae-175ce5dd31c1",
+    "userName": "joseednaldo1983@gmail.com",
+    "normalizedUserName": "JOSEEDNALDO1983@GMAIL.COM",
+    "email": "joseednaldo1983@gmail.com",
+    "normalizedEmail": "JOSEEDNALDO1983@GMAIL.COM",
+    "emailConfirmed": false,
+    "passwordHash": "AQAAAAEAACcQAAAAEPnNteIy9Y0RL/HlzJcCzYXHFt2FymFYQWzn0cMfbucEGCH9PamHAgiFnKpS/PahLg==",
+    "securityStamp": "QARGGAHK6QPZNUM7ISKEKF7AD3D2IBKG",
+    "concurrencyStamp": "289afcd5-d55f-42c4-88b6-09ff2ff67c52",
+    "phoneNumber": null,
+    "phoneNumberConfirmed": false,
+    "twoFactorEnabled": false,
+    "lockoutEnd": null,
+    "lockoutEnabled": true,
+    "accessFailedCount": 0
+},
+]
+
+
+
+######################################################
+AULA  80  OBTER E OBTER TODOS.
+######################################################
+-CRIAÇÃO DO CLASSE REPOSITORIO E INTERFACE.
+(IMensagemRepository,MensagemRepository)
+
+
+######################################################
+AULA  81  OBTER E OBTER TODOS.
+######################################################
+Criando as ações do MensagemController
+-Cadastrar
+-ObterMensagem
+
+######################################################
+AULA  82  TESTANDPO API MensagemController
+######################################################
+coninuat do inicio
+
+CRIAR 2 USUARIOS:
+"fullName": "daniele",
+"slogan": null,
+"id": "22d09c91-44cc-49b2-b30e-9496184e0913",
+
+fullName": "jose",
+    "slogan": null,
+    "id": "aa14f952-3c35-4d4c-a8f2-2af14a71420a",
+token": eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impvc2VAZ21haWwuY29tIiwic3ViIjoiYWExNGY5NTItM2MzNS00ZDRjLWE4ZjItMmFmMTRhNzE0MjBhIiwiZXhwIjoxNjAxMTI0MTQxfQ.yGIRfhApLoV7YDFFZkyjQep9_WvCv-u2Cu8PJASEQeE
+
+
+CONSULTANTO MENSAGEM:
+{{url}}/api/mensagem/22d09c91-44cc-49b2-b30e-9496184e0913/aa14f952-3c35-4d4c-a8f2-2af14a71420a
+
+FAZENDO CADASTRO DE MENSAGEM:
+ex:
+{
+
+  "deId": "aa14f952-3c35-4d4c-a8f2-2af14a71420a",
+  "paraId": "22d09c91-44cc-49b2-b30e-9496184e0913",
+  "texto": "ola maria tudo bem",
+  "criado": "2020-09-26T11:46:46.124Z"
+}
+
+
+RESPOSTA:
+
+    "id": 1,
+    "de": null,
+    "deId": "aa14f952-3c35-4d4c-a8f2-2af14a71420a",
+    "para": null,
+    "paraId": "22d09c91-44cc-49b2-b30e-9496184e0913",
+    "texto": "ola maria tudo bem",
+    "criado": "2020-09-26T11:46:46.124Z"
+}
+
+
+######################################################
+AULA  83  EXPLICANDO O VERBO HTTP PACH
+######################################################
+
+O VERBO PATH É PARECIDO COM O PUT PORQUE O PROPOSITO É GERAR 
+UMA ATUALIZAÇÃO NA ENTIDADE.
+
+O "PUT" SERVE PRA ALTERAR A ENTIDADE COMO TODO,OU SEJA
+ALTERAÇÃO DE TODO OS DADOS DA ENTIDADE.
+O PACH , USAMOS PARA ATUALIZAR POUCOS INFORMAÇÕES
+DA ENTIDADE.
+Exmplo, vamos atualziar apenas os nome e cpf...
+
+Uso:
+ JSONPath -   tem 3 operações
+ Add,Remover e replace e path:""
+
+   ex:
+   JSONPath - {"op": "add|remove|replace", "path":"texto", "value":"Mensagem substituida"}
+
+ex:2
+ JSONPath - {"op": "add|remove|replace", "path":"excluido", "value":true}
+
+######################################################
+AULA  84  IMPLEMENTAÇÇAO E TESTE DO PATCH
+######################################################
+
+Texto do JSONPath: 
+[
+    {
+    "op":"replace",
+    "path":"texto",
+    "value":"Oi Maria -ednaldo moncerra"
+  }
+]
+
+COM 2 OPERAÇÕES:
+[
+    {
+    "op":"replace",
+    "path":"texto",
+    "value":"Oi Maria"
+   },
+    {
+    "op":"add",
+    "path":"excluido",
+    "value":true
+   }
+]
+
+
+######################################################
+AULA  85  HATEOS  NIVEL DE MATURIDADE 3  - OBTER TODOS
+######################################################
+SÃO DOCUMENTOS LINKADOS...
+RESUMO: 
+HATEOAS é uma restrição que faz parte da arquitetura de aplicações REST,
+cujo objetivo é ajudar os clientes a consumirem o serviço sem a necessidade de conhecimento prévio profundo da API. ... 
+Ao ser implementado,
+a API passa a fornecer links que indicarão aos clientes como navegar através dos seus recursos
+ 
+ex:
+UsuarioDTO.Links.Add(new LinkDTO("_self", Url.Link("ObterUsuario",new { id = UsuarioDTO.Id}), "GET"));
+  /*
+               AutoMapper = Objetivo de converte de um objeto pra outro.
+             */
+            //Convertendo  "aplicationuser" para o objeto "usuarioDTO"
+            CreateMap<ApplicationUser, UsuarioDTO>()
+
+                //Mapeando nomes que são diferentes entre as classes...
+                .ForMember(dest => dest.Nome, orig => orig.MapFrom(srv => srv.FullName));
+
+                 CreateMap<List<ApplicationUser>, List<UsuarioDTO>>();
+				 
+				 
+######################################################
+AULA  86  HATEOS  NIVEL DE MATURIDADE 3  - OBTER TODOS
+######################################################
+FOI COLOCADO NOS METODOS DO USAURIO OS LINKS-HETEOS
+
+######################################################
+AULA  87  HATEOS  NIVEL DE MATURIDADE 3  - OBTER TODOS
+######################################################
+
+AJUSTE EM OBTER TODOS.
+
+
+
+
+######################################################################
+AULA  88/89  HATEOS  NIVEL DE MATURIDADE 3  - OBTER TODOS  / TESTES
+######################################################################
+
+HATEOS = links : nos ajudar a conhecer os metodos disponibilzados pela API de forma especifica
+ou seja quais ações tem o  usuario (pesquisa,atualização , cadastros) etc..
+
+
+######################################################################
+AULA 90   CONTENT  NEGOCIATION - HATEOS PARTE 1
+######################################################################
+FORMATOS DE OBJETOS...
+Serve para formatar o resultado...
+
+EX:
+KEY 						VALUE
+Content-Type    			Aplication/json dados de entrada no back   (Estou ennviando os dados no formato json)   - DADO DE ENTRADA NO BACK-END
+Accept					    Aplication/json  dados de saida no front   (Estou recebendo os dados no formato xml)    - DADO DE SAIDA PARA O FRONT-END "CLIENTE FINAL"
+VND=  nos ajudar a criar nossos proprios formatos  ou seja tipo especifico de midiatype.
+O QUE MIDIA TYPE =  NADA MAIS É DO QUE O VALOR QUE ACEITAMOS  NO CASO =>  VALUE "Aplication/json" O U Aplication/txt / Aplication/xml etc...
+
+POR MEIO DO "Accept" podemos ter o nosso midiatype.
+
+######################################################################
+AULA 91   CONTENT  NEGOCIATION - HATEOS PARTE 2   - REPPLICANDO 
+######################################################################
+Serve para formatar o resultado...
+ok
+
+
+
+######################################################################
+AULA 92   CONTENT  NEGOCIATION - HATEOS PARTE 3   - REPPLICANDO 
+######################################################################
+Serve para formatar o resultado...
+HATEOS  usuario controller
+
+######################################################################
+AULA 93   CONTENT  NEGOCIATION - HATEOS PARTE 4  - TESTAR 
+######################################################################
+TESANDO USUARIO.  
+Content-Type      application/json
+Accept            application/vnd.talkto.hateoas+json
+
+
+######################################################################
+AULA 94        TEORIO CORS                    - ASP.NET CORE API              
+######################################################################
+CORS => CROSS ORIGIN RESOURCE SHARING:
+
+SIGNIFICA COMPARTILHAMENTO DE RECURSO DE ORIGEM DIFERENTES.
+SPA = SINGLE PAGE APPLICATION => APLICATIVOS DINAMICOS.
+
+CORS: CABEÇALHOS HTTP ADCIONAIS QUE INDICAM PARA O NAVEGADOR QUE O APLICATIVO 
+WEB EXECUTAM  EM UMA ORIGEM (DOMINIO,PROTOCOLO E PORTA)POSSA ACESSAR RECURSOS DE UM SERVIDOR EM OUTRA ORIGEM.
+
+EXEMPLO:DE PERMISSÃO PARA DOMIMNIO DIFERENTES.
+ALLOW-CONTROL-ALLOW-ORIGIN
+"HTTPS://WWW.GOOGLE.COM.BR"
+
+HTTP= ACCESSC-ONTROLE-ALLOW-ORIGIN.
+
+
+
+######################################################################
+AULA 95  -   CRIANDO UM PROJETO WEB PARTE 1 
+######################################################################
+SÓ HABILITAMOS O CORS QUANDO TEMOS REQUISIÇOES FEITA PELO "NAVEGADOR"
+VIA "AJAX".
+
+PRÉ-FLEET =  É UMA AÇÃO QUE O NAVEGADOR FAZ ANTES DE FAZER NOSSA REQUISIÇÃO
+AJAX.
+È UM REQUISIÇÃO FEITA A API PRA SABER SE A GENTE ESTA AUTORIZADO A FAZER ESSA REQUISIÇÃO.
+SE A GENTE NAO TIVER AUTORIZADO A REQUISIÇÃO GET NAO É CHAMADA.
+
+OU SEJA O PROPRIO NAVEGAR FAZ UM REQUISIÇÃO DO TIPO "OPTIONS"  VER SE A GENTE ESTA 
+AUTORIZADO NO CASO É CHAMADA PARA OUTROS DOMINIOS.
+NESSE CASO ESTAMOS FALANDO DE POLITICAS DE AUTORIZAÇÇÃO  "CORS"
+
+######################################################################
+AULA  96 -   HABILITANDO O CORS  PARTE 2
+######################################################################
+O CORS TEM QUE SER HABILITADO NA "API".
+
+AddDefaultPolicy = poilitica padrão de acesso ao cors. qualquer requisição passa aqui.
+AddPolicy 		 = dar nome aos elementos que vai usar a politica.
+
+######################################################################
+AULA  97 -  MAIS DETALHE CORS PARTE 3
+######################################################################
+######################################################################
+AULA  98 -  TAREFAS E REFATORAR
+######################################################################
+
+
+######################################################################
+AULA  99 - DEPLOY
+######################################################################
+SERVICO DO AZURE : SERVIÇO DE APLICATIVO.
+
+TENHO QUE ESTA LOGADO NO AZURE.
+
+ARQUIVO : MinhasTarefasAPI.xml  
+EM PRORIEDADE "COPIAR PARA DIRETORIO DE SAIDA"
+-DEIXAR SEMPRE COPIAR
+
+
+ARQUIVO : MinhasTarefas.db
+EM PRORIEDADE "COPIAR PARA DIRETORIO DE SAIDA"
+-DEIXAR Copy always
+
+OBS: ESSA AÇÃO GARANTE QUE MEU BANCO E MEU ARQUIVO VA PARA O SERVIDOR AZURE.
+
+dicas para encontrar bibioteclas
+ex:
+nome da tecnologia + "awesome"
+asp.net core "awesome"
+
+
+
+DICAS:
+1- Usuario Cadastrar
+EX:
+{
+    "nome":"teste3",
+    "email":"teste3@gmail.com",
+    "senha":"teste2A2011!",
+    "confirmacaosenha":"teste2A2011!"
+}
+
+
+PARA USAR O METODO Usuario Login   (fazer login)
+usar o json:Ex
+{
+    "email":"teste3@gmail.com",
+    "senha":"teste2A2011!"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
