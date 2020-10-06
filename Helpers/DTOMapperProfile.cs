@@ -15,10 +15,11 @@ namespace TalkToApi.Helpers
              */
             //Convertendo  "aplicationuser" para o objeto "usuarioDTO"
             CreateMap<ApplicationUser, UsuarioDTO>()
-                //Mapeando nomes que são diferentes entre as classes...
-                .ForMember(dest => dest.Nome, orig => orig.MapFrom(srv => srv.FullName));
+                .ForMember(dest => dest.Nome, orig => orig.MapFrom(srv => srv.FullName));  //Mapeando nomes que são diferentes entre as classes...
 
             CreateMap<Mensagem, MensagemDTO>();
+            CreateMap<ApplicationUser, UsuarioDTOSemHyperLink>()
+                .ForMember(dest => dest.Nome, orig => orig.MapFrom(srv => srv.FullName));
 
         }
     }

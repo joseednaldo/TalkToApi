@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -73,6 +74,42 @@ namespace TalkToApi
 
                 cf_.UseSqlite("Data Source=Database\\TalkTo.db");
             });
+            #endregion
+
+            #region   CORS
+
+            services.AddCors( cfg => {
+
+                /*
+                    Origin: Domínio(sub) : api.site.com.br  != www.site.com.br != web.site.com.br != www.empresa.com.br
+                    Dominio(Protocolo) : http//www.site.com.br  != https://www.site.com.br
+                    Dominio(Porta) : http//www.site.com.br:80 != https://www.site.com.br:367
+                 */
+                cfg.AddDefaultPolicy(policy => {
+
+                    policy.WithOrigins("https://localhost:44376", "http://localhost:44376")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains();   // habilitanto todos os sub-dominios
+                    // .WithMethods("GET")
+                    //.WithHeaders("Accept", "Autorization");
+                });
+
+                //Habilitar todos os sites, com restrição
+                cfg.AddPolicy("AnyOrigin", policy=>{
+
+                    policy.AllowAnyOrigin()
+                    .WithMethods("GET")
+                    .AllowAnyHeader();
+                    
+                });
+
+
+
+
+            });
+
+
             #endregion
 
             services.AddMvc(cfg => {
@@ -145,7 +182,13 @@ namespace TalkToApi
 
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false; // são a-A-0-9
+            })
                     .AddEntityFrameworkStores<TalkToContext>()
                     .AddDefaultTokenProviders();
 
@@ -199,6 +242,7 @@ namespace TalkToApi
             app.UseStatusCodePages();
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            //app.UseCors("AnyOrigin"); DESABILITE QUANDO FOR USAR O ATTRIBUTOS ENABLECORS /DISABLECORS
             app.UseMvc();
 
             app.UseSwagger(); // /swagger/v1/swagger.json
