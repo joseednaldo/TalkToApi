@@ -24,6 +24,7 @@ namespace TalkToApi.V1.Controllers
         private readonly IMensagemRepository _mensagemrepository;
         private readonly IMapper _mapper;
 
+
         public MensagemController(IMensagemRepository mensagemrepository, IMapper mapper)
         {
             _mensagemrepository = mensagemrepository;

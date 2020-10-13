@@ -153,7 +153,7 @@ namespace TalkToApi
                 cfg.ResolveConflictingActions(apiDescription => apiDescription.First());// para resolver conflitos de versões da API no Swagger, com mesmo nome.
                 cfg.SwaggerDoc("v1.0", new Swashbuckle.AspNetCore.Swagger.Info()
                 {
-                    Title = "MinhasTarefas API - V1.0",
+                    Title = "Talk To API - V1.0",
                     Version = "v1.0"
                 });
 
